@@ -136,7 +136,14 @@ attr_accessor :contacts
       end
     end
   end
+
 end
+
+at_exit do
+  ActiveRecord::Base.connection.close
+end
+
+
 tyler_crm = CRM.new('Tyler')
 tyler_crm.main_menu
 # Contact.create('Tyler', 'Teng', 'tyler@gmail.com')
