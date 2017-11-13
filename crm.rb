@@ -1,11 +1,10 @@
 require_relative 'contact.rb'
 
 class CRM
-attr_accessor :contacts
+
   def initialize(name)
     puts "This CRM belongs to " + name
     @name
-    @contacts = []
   end
 
   # def contact_list
@@ -57,7 +56,6 @@ attr_accessor :contacts
       email: email,
       notes: notes
     )
-    @contacts << contact
     # print_main_menu
     main_menu
   end
@@ -74,12 +72,12 @@ attr_accessor :contacts
   end
 
   def modify_existing_contact(contact_id, attribute, value)
+     found_contact = Contact.find(contact_id)
+     found_contact.update_attribute(attribute, value)
 
-    self.contacts.each do |x|
-      if x.id == contact_id
-        x.send(attribute+'=',value)
-      end
-    end
+    # self.contacts.each do |x|
+    #   if x.id == contact_id
+    #     x.send(attribute+'=',value)
   end
 
   def prompt_id_to_delete
@@ -90,15 +88,19 @@ attr_accessor :contacts
   end
 
   def delete_contact(contact_id)
-    self.contacts.each do |x|
-      if x.id == contact_id
-        self.contacts.delete(x)
-      end
-    end
+    found_contact = Contact.find(contact_id)
+    found_contact.delete
+
+    # self.contacts.each do |x|
+    #   if x.id == contact_id
+    #     self.contacts.delete(x)
+    #   end
+    # end
   end
 
   def display_all_contacts
-    self.contacts.each do |x|
+    all_contacts = Contact.all
+    all_contacts.each do |x|
       p x
         p "#{x.first_name} #{x.last_name}, email: #{x.email}, id: #{x.id}, notes: #{x.notes}"
       #p x
@@ -136,11 +138,15 @@ attr_accessor :contacts
     #   end
     # end
 # short way (send method)
-    self.contacts.each do |x|
-      if x.send(attribute) == value
-        print x
-      end
-    end
+  #   self.contacts.each do |x|
+  #     if x.send(attribute) == value
+  #       print x
+  #     end
+  #   end
+  # end
+
+  p Contact.find_by(attribute => value)
+
   end
 
 end
