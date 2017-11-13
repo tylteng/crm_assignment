@@ -48,10 +48,15 @@ attr_accessor :contacts
     last_name = gets.chomp
     print 'Email: '
     email = gets.chomp
-    print 'Note: '
-    note = gets.chomp
+    print 'Notes: '
+    notes = gets.chomp
 
-    contact = Contact.new(first_name, last_name, email, note)
+    contact = Contact.create(
+      first_name: first_name,
+      last_name: last_name,
+      email: email,
+      notes: notes
+    )
     @contacts << contact
     # print_main_menu
     main_menu
@@ -94,7 +99,8 @@ attr_accessor :contacts
 
   def display_all_contacts
     self.contacts.each do |x|
-        p "#{x.first_name} #{x.last_name}, email: #{x.email}, id: #{x.id}"
+      p x
+        p "#{x.first_name} #{x.last_name}, email: #{x.email}, id: #{x.id}, notes: #{x.notes}"
       #p x
     end
   end
